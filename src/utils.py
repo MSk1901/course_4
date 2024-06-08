@@ -23,8 +23,8 @@ def user_interaction():
 """))
     user_query = input("Введите запрос: ")
 
-    needs_sorting = input("Сортировать вакансии по зарплатам? (Да/Нет): ").lower().strip()
-    while needs_sorting not in ["да", "нет"]:
+    needs_sorting = input("Сортировать вакансии по зарплатам? (Да/Нет): ")
+    while needs_sorting.lower().strip() not in ["да", "нет"]:
         needs_sorting = input("Введите Да или Нет: ")
     if needs_sorting == "да":
         needs_sorting = True
@@ -36,6 +36,7 @@ def user_interaction():
     while not top.isdigit():
         top = input("Введите цифру, сколько вакансий вывести или 0, если нужно вывести все: ")
 
+    print("\nСобираем информацию...")
     if platforms == 1:
         vacancies = hh_api.get_vacancies(user_query)
     elif platforms == 2:
