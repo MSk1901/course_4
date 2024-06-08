@@ -17,13 +17,15 @@ class JSONSaver(FileHandler):
 
     def add_vacancies(self, vacancies: list):
         """Добавляет вакансии в файл с вакансиями"""
-        with open(self.__path, "a+") as file:
-            data = file.read()
-            if data:
+        try:
+            with open(self.__path, "r", encoding="utf-8") as file:
                 data = json.load(file)
-                data += vacancies
-            else:
-                data = vacancies
+        except (FileNotFoundError, json.JSONDecodeError):
+            data = []
+
+        data.extend(vacancies)
+
+        with open(self.__path, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
     def get_vacancies_by_salary(self, salary: int):
